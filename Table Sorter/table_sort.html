@@ -1,0 +1,135 @@
+<html>
+
+	<head>
+		<title>Table Sorter</title>
+		<style type="text/css" media="screen">
+			td, th { border: 1px solid #111; padding: 6px; }
+			th { font-weight: 700; }
+		</style>
+		<link rel="stylesheet" href="/blue/style.css" type="text/css" id="" media="print, projection, screen" />
+		<script type="text/javascript" src="/js/jquery-1.8.2.js"></script>
+		<script type="text/javascript" src="/js/plugins/jquery.tablesorter.js"></script>
+		<script type="text/javascript">
+			var all_selected = ['box1', 'box2', 'box3', 'box4', 'box5'];
+
+			function hideColumn(id){
+				$('td:nth-child('+id+'),th:nth-child('+id+')').hide();
+			}
+
+			function showColumn(id){
+				$('td:nth-child('+id+'),th:nth-child('+id+')').show();
+			}
+
+			function toggleColumn(id){
+				$('td:nth-child('+id+'),th:nth-child('+id+')').toggle();
+			}
+
+			$(document).ready(function(){
+				$(function() {
+					$("table").tablesorter({debug: true});
+				});
+
+				$('#option-toggle').click(function() {
+				    $('#selection_list').toggle('slow');
+				    return false;
+				  });
+
+				$('#update-cols').click(function(){
+
+					var cur_selected = new Array();
+					$("input:checkbox[name=type]:checked").each(function() {
+						cur_selected.push(this.value);
+					});
+
+					$.each(all_selected, function(){
+						var element = $("#col-"+this);
+						hideColumn(element.attr('class'));
+					});
+
+					$.each(cur_selected, function(){
+						var element = $("#col-"+this);
+						showColumn(element.attr('class'));
+					});
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div align = "left">
+			<table id="rowspan" cellspacing="0" class="tablesorter">
+				<thead>
+					<tr> 
+				        <th id="student_name">Student Name</th>
+				        <th id="strands_completed">Strands Completed</th>
+				        <th id="tokens_earned">Tokens Earned</th>
+				        <th id="time_spent">Total Time Spent (Hours)</th>
+				        <th id="money_earned">Dollars Earned</th>
+					</tr> 
+				</thead> 
+				<tbody>
+					<div id="col-box1" class="1"> 
+						<tr>
+						    <td>A</td>
+						    <td>1</td>
+						    <td>2</td>
+						    <td>3</td>
+						    <td>1000</td>
+						</tr>
+					</div>
+					<div id="col-box2" class="2"> 
+						<tr>
+						    <td>B</td>
+						    <td>2</td>
+						    <td>4</td>
+						    <td>5</td>
+						    <td>2000</td>
+						</tr>
+					</div>
+					<div id="col-box3" class="3"> 
+						<tr>
+						    <td>C</td>
+						    <td>3</td>
+						    <td>6</td>
+						    <td>7</td>
+						    <td>3000</td>
+						</tr>
+					</div>
+					<div id="col-box4" class="4"> 
+						<tr>
+						    <td>XYZ</td>
+						    <td>8</td>
+						    <td>8</td>
+						    <td>8</td>
+						    <td>500</td>
+						</tr>
+					</div>
+					<div id="col-box5" class="5"> 
+						<tr>
+						    <td>E</td>
+						    <td>13</td>
+						    <td>2</td>
+						    <td>456</td>
+						    <td>30700</td>
+						</tr> 
+					</div>
+				</tbody> 
+			</table> 
+		</div>
+
+		<input type="submit" name="option-toggle" value="Show/Hide Table Columns" id="option-toggle">
+
+		<div id="selection_list">
+			<ul>
+			<li><input type="checkbox" name="type" value="box1" checked="checked">Student Name</input></li>
+			<li><input type="checkbox" name="type" value="box2" checked="checked">Strands Completed</input></li>
+			<li><input type="checkbox" name="type" value="box3" checked="checked">Tokens Earned</input></li>
+			<li><input type="checkbox" name="type" value="box4" checked="checked">Total Time Spent</input></li>
+			<li><input type="checkbox" name="type" value="box5" checked="checked">Dollars Earned</input></li>
+			</ul>
+		</div>
+
+		</br>
+		<input type="submit" name="update-cols" value="Update Columns" id="update-cols">
+	</body>
+</html>
